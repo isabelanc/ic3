@@ -94,36 +94,37 @@ def marcar_bordas_nao_geradas_como_nan(
     return matriz.ravel()
 
 
-colunas_atributos = {}
+if __name__ == "__main__":
+    colunas_atributos = {}
 
-geometria_referencia = None
+    geometria_referencia = None
 
-for nome_atributo in nomes_atributos:
-    caminho_arquivo = pasta_dos_arquivos / atributos_sismicos[nome_atributo]
-    if not caminho_arquivo.exists():
-        raise FileNotFoundError(f"Arquivo nao encontrado: {caminho_arquivo}")
+    for nome_atributo in nomes_atributos:
+        caminho_arquivo = pasta_dos_arquivos / atributos_sismicos[nome_atributo]
+        if not caminho_arquivo.exists():
+            raise FileNotFoundError(f"Arquivo nao encontrado: {caminho_arquivo}")
 
-    print(f"Lendo atributo: {nome_atributo}")
-    valores, geometria_referencia = ler_geometria_e_valores(caminho_arquivo, geometria_referencia)
+        print(f"Lendo atributo: {nome_atributo}")
+        valores, geometria_referencia = ler_geometria_e_valores(caminho_arquivo, geometria_referencia)
 
-    valores = marcar_bordas_nao_geradas_como_nan(
-        valores, geometria_referencia["n_traces"], geometria_referencia["n_samples"]
-    )
-    colunas_atributos[nome_atributo] = valores
+        valores = marcar_bordas_nao_geradas_como_nan(
+            valores, geometria_referencia["n_traces"], geometria_referencia["n_samples"]
+        )
+        colunas_atributos[nome_atributo] = valores
 
-n_traces = geometria_referencia["n_traces"]
-n_samples = geometria_referencia["n_samples"]
+    n_traces = geometria_referencia["n_traces"]
+    n_samples = geometria_referencia["n_samples"]
 
-colunas_geometria = {
-    "inline": np.repeat(geometria_referencia["inlines"], n_samples),
-    "xline": np.repeat(geometria_referencia["xlines"], n_samples),
-    "sample_idx": np.tile(np.arange(n_samples, dtype=np.int16), n_traces),
-    "sample_time": np.tile(geometria_referencia["sample_time"], n_traces),
-}
+    colunas_geometria = {
+        "inline": np.repeat(geometria_referencia["inlines"], n_samples),
+        "xline": np.repeat(geometria_referencia["xlines"], n_samples),
+        "sample_idx": np.tile(np.arange(n_samples, dtype=np.int16), n_traces),
+        "sample_time": np.tile(geometria_referencia["sample_time"], n_traces),
+    }
 
-df_final = pd.DataFrame({**colunas_geometria, **colunas_atributos})
-del colunas_geometria, colunas_atributos
+    df_final = pd.DataFrame({**colunas_geometria, **colunas_atributos})
+    del colunas_geometria, colunas_atributos
 
-print(f"\nDataFrame final: {len(df_final):,} linhas")
-print(f"Memoria: {df_final.memory_usage(deep=True).sum() / 2**30:.2f} GB")
-print(df_final.head())
+    print(f"\nDataFrame final: {len(df_final):,} linhas")
+    print(f"Memoria: {df_final.memory_usage(deep=True).sum() / 2**30:.2f} GB")
+    print(df_final.head())
