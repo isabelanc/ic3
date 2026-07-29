@@ -63,12 +63,14 @@ df_grupos_por_k = pd.DataFrame(colunas_grupo_por_k, index=df_pca.index)
 print(df_metricas_k)
 
 # Escolha do K final para uso nos plots de facies (plotar_facies_inline.py /
-# plotar_facies_crossline.py / plotar_facies_zslice.py). Por padrao usa o K
-# que minimiza o indice Davies-Bouldin; troque k_escolhido para usar outro
-# valor (ex.: o ponto de "cotovelo" identificado visualmente no grafico de
-# validar_numero_clusters.py).
-k_escolhido = int(df_metricas_k["davies_bouldin"].idxmin())
-print(f"K escolhido (menor Davies-Bouldin): {k_escolhido}")
+# plotar_facies_crossline.py / plotar_facies_zslice.py). Escolhido
+# manualmente como 4; para referencia, o K de menor Davies-Bouldin tambem
+# e impresso abaixo.
+melhor_k_db = int(df_metricas_k["davies_bouldin"].idxmin())
+print(f"K de menor Davies-Bouldin (referência): {melhor_k_db}")
+
+k_escolhido = 4
+print(f"K escolhido para os plots de fácies: {k_escolhido}")
 
 df_com_pca["grupo_kmeans"] = df_grupos_por_k[f"grupo_k{k_escolhido}"]
 centroides = centroides_por_k[k_escolhido]
