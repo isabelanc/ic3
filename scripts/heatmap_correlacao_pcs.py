@@ -26,7 +26,8 @@ correlacao_focada = correlacao_focada.rename(
         "PC5": "5ª Componente",
     },
     columns={
-        "sweetness": "Sweetness",
+        "amp_inst": "Amplitude Instantânea",
+        "sd_10hz": "Decomposição Espectral (10 Hz)",
         "sd_15hz": "Decomposição Espectral (15 Hz)",
         "sd_20hz": "Decomposição Espectral (20 Hz)",
         "sd_25hz": "Decomposição Espectral (25 Hz)",
@@ -35,8 +36,7 @@ correlacao_focada = correlacao_focada.rename(
         "sd_40hz": "Decomposição Espectral (40 Hz)",
         "sd_45hz": "Decomposição Espectral (45 Hz)",
         "sd_50hz": "Decomposição Espectral (50 Hz)",
-        "amp_inst": "Amplitude Instantânea",
-        "amp_rms": "Amplitude RMS",
+        "sd_55hz": "Decomposição Espectral (55 Hz)",
     },
 )
 
