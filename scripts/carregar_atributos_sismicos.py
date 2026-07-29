@@ -10,9 +10,8 @@ import segyio as sio
 pasta_dos_arquivos = Path(".")
 
 atributos_sismicos = {
-    # "sweetness": "Sweetness.sgy",
+    "sweetness": "Sweetness.sgy",
     # "similaridade": "similarity.sgy",
-    "sd_10hz": "SD_10hz.sgy",
     "sd_15hz": "SD_15hz.sgy",
     "sd_20hz": "SD_20hz.sgy",
     "sd_25hz": "25Hz_spectral_decomposition.sgy",
@@ -21,9 +20,8 @@ atributos_sismicos = {
     "sd_40hz": "SD_40hz.sgy",
     "sd_45hz": "45Hz_spectral_decomposition.sgy",
     "sd_50hz": "SD_50hz.sgy",
-    "sd_55hz": "SD_55hz.sgy",
     "amp_inst": "instantaneous_amplitude.sgy",
-    # "amp_rms": "Amp_RMS.sgy",
+    "amp_rms": "Amp_RMS.sgy",
 }
 
 nomes_atributos = list(atributos_sismicos.keys())

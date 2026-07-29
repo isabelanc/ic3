@@ -5,8 +5,8 @@ namespace (gerado ao rodar o loader antes deste script/celula)."""
 import pandas as pd
 
 colunas_atributos = [
-    "sd_10hz", "sd_15hz", "sd_20hz", "sd_25hz", "sd_30hz", "sd_35hz",
-    "sd_40hz", "sd_45hz", "sd_50hz", "sd_55hz", "amp_inst",
+    "sweetness", "sd_15hz", "sd_20hz", "sd_25hz", "sd_30hz", "sd_35hz",
+    "sd_40hz", "sd_45hz", "sd_50hz", "amp_inst", "amp_rms",
 ]
 
 
