@@ -1,5 +1,6 @@
 """Agrupa (K-means) as amostras no espaço dos componentes principais.
-Pressupoe que 'df_pca' ja existe no namespace (gerado por aplicar_pca.py)."""
+Pressupoe que 'df_pca' e 'df_com_pca' ja existem no namespace (gerados por
+aplicar_pca.py)."""
 
 import pandas as pd
 from sklearn.cluster import KMeans
@@ -21,6 +22,10 @@ kmeans.fit(dados_para_cluster)
 # completo, preservando NaN nas linhas de borda excluidas
 rotulos = pd.Series(kmeans.labels_, index=dados_para_cluster.index, name="cluster")
 rotulos_completo = rotulos.reindex(df_pca.index)
+
+# grava o rotulo de cluster no DataFrame completo, para uso nos plots de
+# facies (plotar_facies_inline.py / plotar_facies_crossline.py)
+df_com_pca["grupo_kmeans"] = rotulos_completo
 
 # posições finais dos 4 centros (cada um com 5 coordenadas), depois de todas as repetições (mu_k)
 centroides = kmeans.cluster_centers_
