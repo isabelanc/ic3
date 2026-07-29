@@ -55,3 +55,28 @@ independentes, exceto pelas funções/config reaproveitadas via `import`.
 
 Os passos 10, 11 e 12 são autocontidos entre si (cada um define sua própria
 paleta de cores fixa por grupo) — dependem apenas do passo 8 ter rodado.
+
+## Alternativa de clusterização: Gaussian Mixture Model (GMM)
+
+Mesma ideia dos passos 8–9, usando GMM em vez de K-means (não substitui,
+roda em paralelo — ambos podem coexistir na mesma sessão, usam nomes de
+variável diferentes). Precisa de `df_pca`/`df_com_pca` (passo 4).
+
+- **`clusterizar_gmm.py`** — treina um `GaussianMixture` (`covariance_type=
+  "full"`, `n_init=5`) para cada K de 3 a 8, com checagem de convergência do
+  EM por K. Produz `df_metricas_gmm_k` (BIC, Davies-Bouldin, convergência),
+  `df_grupos_gmm_por_k` (rótulos por K, `NaN` de borda preservado),
+  `responsabilidades_gmm_por_k` (dict `{K: DataFrame}` com a probabilidade
+  de cada amostra pertencer a cada componente) e `modelos_gmm_por_k` (dict
+  `{K: GaussianMixture}`). Ao final, escolhe `k_escolhido_gmm` (por padrão,
+  o K de menor BIC — critério padrão para número de componentes de misturas
+  gaussianas) e grava `df_com_pca["grupo_gmm"]`, além de `pesos_pi`,
+  `medias_mu`, `covariancias` do modelo escolhido.
+- **`validar_numero_clusters_gmm.py`** — plota BIC e Davies-Bouldin a partir
+  de `df_metricas_gmm_k`, com o melhor K destacado em cada gráfico (sem
+  re-treinar). Avisa se algum K não convergiu.
+
+Os scripts de plot de fácies (10–12) ainda só leem a coluna `grupo_kmeans` —
+para plotar fácies do GMM, adapte-os para usar `grupo_gmm` (mesma lógica de
+`ListedColormap`/`BoundaryNorm`, trocando a coluna e `centroides` por
+`medias_mu`).
