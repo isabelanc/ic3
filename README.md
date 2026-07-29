@@ -26,14 +26,25 @@ independentes, exceto pelas funções/config reaproveitadas via `import`.
    e os PCs. Usa `df_com_pca`.
 7. **`plotar_secao_inline_pcs.py`** — seção de um inline para cada PC. Usa
    `df_com_pca`.
-8. **`clusterizar_pcs.py`** — K-means no espaço dos PCs. Produz
-   `dados_para_cluster`, `centroides`, e grava a coluna
-   `df_com_pca["grupo_kmeans"]`.
-9. **`validar_numero_clusters.py`** — método do cotovelo (inércia) e índice
-   Davies-Bouldin para validar a escolha de K. Precisa de
-   `dados_para_cluster`, ou seja, só roda depois do passo 8 (pelo menos
-   uma vez). Se sugerir um K diferente do usado no passo 8, ajuste
-   `n_clusters` em `clusterizar_pcs.py` e rode os passos 8–9 de novo.
+8. **`clusterizar_pcs.py`** — treina um K-means para **cada K de 3 a 8** (uma
+   única vez, sem duplicar o treino no passo 9). Produz:
+   - `df_metricas_k` — inércia e índice Davies-Bouldin por K;
+   - `df_grupos_por_k` — uma coluna `grupo_k{K}` por K testado (mesmo índice
+     de `df_pca`, `NaN` preservado nas linhas de borda);
+   - `centroides_por_k` — dict `{K: cluster_centers_}`.
+
+   Ao final, escolhe `k_escolhido` (por padrão, o K de menor Davies-Bouldin)
+   e grava `df_com_pca["grupo_kmeans"]` / `centroides` a partir dele, para uso
+   direto nos plots de fácies. Para trocar de K sem re-treinar, é só repetir
+   as 3 últimas linhas do script com outro valor de `k_escolhido`:
+   ```python
+   k_escolhido = 4
+   df_com_pca["grupo_kmeans"] = df_grupos_por_k[f"grupo_k{k_escolhido}"]
+   centroides = centroides_por_k[k_escolhido]
+   ```
+9. **`validar_numero_clusters.py`** — plota o método do cotovelo (inércia) e
+   o índice Davies-Bouldin a partir de `df_metricas_k` (não re-treina nada,
+   só visualiza o que o passo 8 já calculou para todos os K).
 10. **`plotar_facies_inline.py`** — mapa de fácies (grupos K-means) de um
     inline. Usa `df_com_pca` (coluna `grupo_kmeans`) e `centroides`.
 11. **`plotar_facies_crossline.py`** — mesma ideia do passo 10, para uma
