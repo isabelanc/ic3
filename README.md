@@ -46,15 +46,23 @@ independentes, exceto pelas funções/config reaproveitadas via `import`.
    o índice Davies-Bouldin a partir de `df_metricas_k` (não re-treina nada,
    só visualiza o que o passo 8 já calculou para todos os K).
 10. **`plotar_facies_inline.py`** — mapa de fácies (grupos K-means) de um
-    inline. Usa `df_com_pca` (coluna `grupo_kmeans`) e `centroides`.
+    inline, para o `k_escolhido`. Usa `df_com_pca` (coluna `grupo_kmeans`) e
+    `centroides`.
 11. **`plotar_facies_crossline.py`** — mesma ideia do passo 10, para uma
     crossline. Independente do passo 10.
 12. **`plotar_facies_zslice.py`** — mapa de fácies em planta (inline ×
     crossline) numa fatia de tempo/profundidade fixa. Independente dos
     passos 10 e 11.
+13. **`plotar_facies_inline_todos_k.py`** — mesma ideia do passo 10, mas um
+    subplot para **cada K testado** (3 a 8), lado a lado, pra comparar
+    visualmente como a segmentação muda com o número de grupos. Usa
+    `df_grupos_por_k`/`centroides_por_k` (passo 8) diretamente — não precisa
+    do `k_escolhido`, nem de re-treinar.
 
 Os passos 10, 11 e 12 são autocontidos entre si (cada um define sua própria
-paleta de cores fixa por grupo) — dependem apenas do passo 8 ter rodado.
+paleta de cores fixa por grupo) — dependem apenas do passo 8 ter rodado. O
+passo 13 usa uma paleta com 8 cores (para cobrir até K=8); se `faixa_k` em
+`clusterizar_pcs.py` mudar para K maior, a paleta precisa crescer junto.
 
 ## Alternativa de clusterização: Gaussian Mixture Model (GMM)
 
