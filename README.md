@@ -58,6 +58,8 @@ independentes, exceto pelas funções/config reaproveitadas via `import`.
     visualmente como a segmentação muda com o número de grupos. Usa
     `df_grupos_por_k`/`centroides_por_k` (passo 8) diretamente — não precisa
     do `k_escolhido`, nem de re-treinar.
+14. **`plotar_facies_crossline_todos_k.py`** — mesma ideia do passo 13, para
+    uma crossline em vez de um inline.
 
 Os passos 10, 11 e 12 são autocontidos entre si (cada um define sua própria
 paleta de cores fixa por grupo) — dependem apenas do passo 8 ter rodado. O
