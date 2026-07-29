@@ -9,11 +9,6 @@ inline_alvo = 1326
 
 pcs_para_plotar = ["PC1", "PC2", "PC3", "PC4", "PC5"]
 
-# satura (preto/branco) os valores acima do percentil abaixo, aumentando o
-# contraste do restante dos dados; abaixe para mais contraste, suba para
-# mais fidelidade aos extremos
-percentil_clip = 98
-
 df_inline = df_com_pca[df_com_pca["inline"] == inline_alvo].copy()
 
 fig, axes = plt.subplots(
@@ -26,10 +21,8 @@ for ax, pc in zip(axes, pcs_para_plotar):
     xlines_secao = df_pivot.columns.to_numpy()
 
     # PCs sao centrados em zero pelo PCA -> escala simetrica em torno de
-    # zero, como ja usado nos outros plots de secao sismica. Usa percentil
-    # em vez do maximo absoluto para nao deixar outliers achatarem o
-    # contraste do restante dos dados.
-    limite = np.nanpercentile(np.abs(matriz_2d), percentil_clip)
+    # zero, como ja usado nos outros plots de secao sismica
+    limite = np.nanmax(np.abs(matriz_2d))
     extensao = [xlines_secao.min(), xlines_secao.max(), matriz_2d.shape[0] - 1, 0]
 
     im = ax.imshow(
