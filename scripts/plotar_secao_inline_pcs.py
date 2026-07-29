@@ -26,7 +26,7 @@ for ax, pc in zip(axes, pcs_para_plotar):
     extensao = [xlines_secao.min(), xlines_secao.max(), matriz_2d.shape[0] - 1, 0]
 
     im = ax.imshow(
-        matriz_2d, cmap="RdBu_r", aspect="auto", extent=extensao,
+        matriz_2d, cmap="grey", aspect="auto", extent=extensao,
         vmin=-limite, vmax=limite,
     )
 
