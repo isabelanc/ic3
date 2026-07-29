@@ -1,9 +1,20 @@
 """Plota o mapa de facies (grupos K-means) em uma fatia de tempo/profundidade
 fixa (Z-slice), no plano inline x crossline. Pressupoe que 'df_com_pca' (com
-a coluna 'grupo_kmeans'), 'mapa_facies' e 'k_usado' ja existem no namespace
-(gerados por clusterizar_pcs.py / plotar_facies_inline.py)."""
+a coluna 'grupo_kmeans') e 'centroides' ja existem no namespace (gerados por
+clusterizar_pcs.py)."""
 
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+
+cores_base = ["black", "dodgerblue", "forestgreen", "gold", "lightgray"]
+
+k_usado = len(centroides)
+assert k_usado <= len(cores_base), (
+    f"cores_base tem {len(cores_base)} cores, mas k_usado={k_usado}. "
+    "Adicione mais cores em cores_base."
+)
+
+mapa_facies = ListedColormap(cores_base[:k_usado])
 
 indice_z_alvo = 75
 
