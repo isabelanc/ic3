@@ -60,6 +60,10 @@ independentes, exceto pelas funções/config reaproveitadas via `import`.
     do `k_escolhido`, nem de re-treinar.
 14. **`plotar_facies_crossline_todos_k.py`** — mesma ideia do passo 13, para
     uma crossline em vez de um inline.
+15. **`plotar_facies_zslice_todos_k.py`** — mesma ideia dos passos 13/14,
+    mas em planta (Z-slice, inline × crossline numa amostra de tempo fixa),
+    com `origin="lower"` para manter a convenção de mapa (inline crescendo
+    para cima), igual ao `plotar_facies_zslice.py`.
 
 Os passos 10, 11 e 12 são autocontidos entre si (cada um define sua própria
 paleta de cores fixa por grupo) — dependem apenas do passo 8 ter rodado. O
